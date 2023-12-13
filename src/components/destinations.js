@@ -7,21 +7,28 @@ import {
 } from 'react-native-responsive-screen'
 import { LinearGradient } from 'expo-linear-gradient'
 import { HeartIcon } from 'react-native-heroicons/solid'
+import { useNavigation } from '@react-navigation/native'
 
 export default function Destinations() {
+  const navigation = useNavigation()
+
   return (
     <View className="mx-4 flex-row justify-between flex-wrap">
       {destinationData.map((item, index) => {
-        return <DestinationCard item={item} key={index} />
+        return (
+          <DestinationCard navigation={navigation} item={item} key={index} />
+        )
       })}
     </View>
   )
 }
 
-const DestinationCard = ({ item }) => {
+const DestinationCard = ({ item, navigation }) => {
   const [isFavorite, toggleFavorite] = useState(false)
+
   return (
     <TouchableOpacity
+      onPress={() => navigation.navigate('Destination', { ...item })}
       style={{ width: wp(44), height: wp(65) }}
       className="flex justify-end relative p-4 py-6 space-y-2 mb-5"
     >
